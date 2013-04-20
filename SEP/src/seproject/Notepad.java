@@ -81,14 +81,14 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 {
    	static Container c;//container to support the java components
     	public static JScrollPane sc;//scroll pane for the window
-  		public static JTextArea t = new JTextArea() //text area for the window
- 		{
-    		public void addNotify()
-			{
-        		super.addNotify();
-        		requestFocus();
-    		}
-		};
+  	public static JTextArea t = new JTextArea() //text area for the window
+ 	{
+            public void addNotify()
+            {
+        	super.addNotify();
+        	requestFocus();
+            }
+	};
 
     	private static JMenuBar menubar;//menu bar for the windiw
 
@@ -101,7 +101,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         private JMenuItem file_save_as_Image; // for image encoding or decoding
     	private JSeparator file_sep2;//division separating save-saveas and print options
     	private JMenuItem file_print;//to print
-	  	private JMenuItem file_print_preview;
+	private JMenuItem file_print_preview;
    	private JMenuItem file_auto;
     	private JSeparator file_sep3;
     	private JMenuItem file_close;//to close
@@ -128,17 +128,18 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         Steganography stg_obj=new Steganography();
         //----------------------------------------
 
+
     	private JMenu format;//menu to format the content in the text area
     	private JMenuItem format_font;//format the font
     	private JMenu convert;//options to switch the cases-capital or small letter
     	private JMenuItem str2uppr, str2lwr;//switch to lower or to upper case
     	private JCheckBoxMenuItem format_wordwarp;//enable or disable word wrap
 
-		private JMenu tts;
-		private JMenuItem co;
+	private JMenu tts;
+	private JMenuItem co;
 
-	 	private JMenu help;//menu for help
-  	  	private JMenuItem help_about;//option about
+ 	private JMenu help;//menu for help
+  	private JMenuItem help_about;//option about
 
     	UndoManager undo = new UndoManager();//operations on undoing or redoing the edition
     	UIManager.LookAndFeelInfo lnf[];//for look and feel and obtain various default values
@@ -146,30 +147,29 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
     	Find finder;//instance of 'Find' class
     	FontChooser fc;//instance of 'FontChooser' class
     	About abt;//instance of 'About' class
-		String path, content;//path-file name in the folder and content- content of the file
+	String path, content;//path-file name in the folder and content- content of the file
 
-		JLabel lab;
-		JTextField text;
-		JButton b1;
+	JLabel lab;
+	JTextField text;
+	JButton b1;
 
     	public Notepad()
-		{
-        	super("Secure Note");//name/heading on the window
+	{
+           	super("Secure Note");//name/heading on the window
         	try//exception handling for the user interface look and feel option
         	{
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+                javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         	}
         	catch(Exception ex)
         	{
-            ex.printStackTrace();
-        	}
-
+                    ex.printStackTrace();
+                }
         	Container c = getContentPane();//container to add components
 
 
         	t.setFont(new Font("Verdana",Font.PLAIN, 12));//default font
-		  	t.addMouseListener(new java.awt.event.MouseAdapter()
-			{
+		t.addMouseListener(new java.awt.event.MouseAdapter()
+		{
     			public void mouseClicked(java.awt.event.MouseEvent evt)
 				{
 					if (evt.getModifiers()==4)
@@ -675,6 +675,8 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 		}
 
 
+
+        
     	public void file_new()
 		{
         //if the file is empty or it is not modified
@@ -724,6 +726,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         String file_ext= myfile.getName();
         CharSequence png = "png";
         CharSequence txt = "txt";
+        CharSequence img_tester = "@@$$~";
         try
         {
         if(file_ext.contains(png))
@@ -732,11 +735,18 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
             int x=myfile.getName().length();
             String path_temp= myfile.getAbsolutePath().replace(myfile.getName(),"");
             String temp = stg_obj.decode(path_temp,myfile.getName().replace(".png",""));
-
-            t.setText(temp.toString());
-            content = t.getText();
-            path = myfile.toString();
-            setTitle(myfile.getName()+" - Notepad");
+            if(temp.contains(img_tester))
+            {
+                t.setText(temp.toString().replace(img_tester,""));
+                content = t.getText();
+                path = myfile.toString();
+                setTitle(myfile.getName()+" - SecureNote");
+            }
+            else
+            {
+                //If a image is not encrypted , i.e., when a user opens invalid image
+            JOptionPane.showMessageDialog(null, "Invalid Image opened  "); 
+            }
         }
         else
         {
@@ -746,6 +756,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
                 while((line = input.readLine()) != null)
                     str.append(line+"\n");
                 t.setText(str.toString());
+                setTitle(myfile.getName() + "- SecureNote");
         }
         }
         catch(Exception e)
@@ -799,6 +810,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 
         try
         {
+            
             FileWriter fw = new FileWriter(myfile);
             fw.write(t.getText());
             content = t.getText();
@@ -838,8 +850,8 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         temp = temp.replace(".jpeg","");
         System.out.println(temp);
 
-        stg_obj.encode(fp, "akshay","png",temp,t.getText());
-
+        stg_obj.encode(fp, "akshay","png",temp,t.getText()+"@@$$~");
+                                    //@@$$~ represents software steg protocol
     }
 
     	public void file_print()
