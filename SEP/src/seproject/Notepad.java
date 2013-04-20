@@ -382,27 +382,17 @@ public class Notepad extends JFrame implements ActionListener
             JOptionPane.showMessageDialog(this, "Select a file!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.println("myfile = "+myfile.getName().toString().split("."));
+        System.out.println("myfile = "+myfile.getName());
+        String file_ext= myfile.getName();
+        CharSequence png = "png";
+        CharSequence txt = "txt";
         try
         {
-        String file_ext;
-        String temp2[];
-        System.out.print(myfile.getName().split("."));
-        temp2 = myfile.getName().toString().split(".");
-        file_ext = temp2[1];
-        System.out.println("file_ext"+file_ext);
-        if(file_ext.equals("png"))
+        if(file_ext.contains(png))
         {
-            /*
-            BufferedReader input = new BufferedReader(new FileReader(myfile));
-            StringBuffer str = new StringBuffer();
-            String line;
-            while((line = input.readLine()) != null) // st is declared as string avobe
-                str.append(line+"\n");*/
-
+            
             int x=myfile.getName().length();
             String path_temp= myfile.getAbsolutePath().replace(myfile.getName(),"");
-            //System.out.println(path_temp+"----------"+myfile.getName());
             String temp = stg_obj.decode(path_temp,myfile.getName().replace(".png",""));
          
             t.setText(temp.toString());
@@ -416,7 +406,7 @@ public class Notepad extends JFrame implements ActionListener
                 BufferedReader input = new BufferedReader(new FileReader(myfile));
                 StringBuffer str = new StringBuffer();
                 String line;
-                while((line = input.readLine()) != null) // st is declared as string avobe
+                while((line = input.readLine()) != null)
                     str.append(line+"\n");
 
 
@@ -425,8 +415,8 @@ public class Notepad extends JFrame implements ActionListener
         
         catch(Exception e)
         {
-            //JOptionPane.showMessageDialog(null, "File not found: "); //changed here!!!
-            JOptionPane.showMessageDialog(null, e.toString()); //changed here!!!
+            JOptionPane.showMessageDialog(null, "File not found: "); //changed here!!!
+            
         }
 
     }
