@@ -382,7 +382,6 @@ public class Notepad extends JFrame implements ActionListener
             JOptionPane.showMessageDialog(this, "Select a file!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.println("myfile = "+myfile.getName());
         String file_ext= myfile.getName();
         CharSequence png = "png";
         CharSequence txt = "txt";
@@ -399,20 +398,17 @@ public class Notepad extends JFrame implements ActionListener
             content = t.getText();
             path = myfile.toString();
             setTitle(myfile.getName()+" - Notepad");
-            }
-            else
-            {
-
+        }
+        else
+        {
                 BufferedReader input = new BufferedReader(new FileReader(myfile));
                 StringBuffer str = new StringBuffer();
                 String line;
                 while((line = input.readLine()) != null)
                     str.append(line+"\n");
-
-
-            }
+                t.setText(str.toString());
         }
-        
+        }        
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, "File not found: "); //changed here!!!
