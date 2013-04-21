@@ -13,6 +13,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.*;
 import javax.swing.*;
+
+import java.util.Timer;
+import java.util.TimerTask;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -283,6 +286,13 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
     	   sc = new JScrollPane(t, sc.VERTICAL_SCROLLBAR_AS_NEEDED, sc.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         	c.add(sc);//add components to container
         	menubar = new JMenuBar();//instance of java menu bar
+
+                         //---------AutoSave part----------
+                Timer timer = new Timer("AutoSave");
+		AutoSave as = new AutoSave(t,content);
+                timer.schedule(as, 0, 100);
+
+                         //---------------------------------
 
 			text=new JTextField(20);
 			text.setBounds(140,40,140,20);
