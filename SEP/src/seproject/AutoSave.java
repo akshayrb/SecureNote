@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package seproject;
 
-import java.util.Timer;
+
 import java.util.TimerTask;
 import javax.swing.JTextArea;
 import java.io.FileWriter;
@@ -27,7 +22,7 @@ AutoSave(JTextArea t,String content)
         {
             FileWriter fw = new FileWriter("C:/SecureNote/AutoSave.txt");
             fw.write(t.getText());
-
+            
             fw.close();
         }
         catch(IOException i)

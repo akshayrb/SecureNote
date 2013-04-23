@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package seproject;
 
@@ -126,12 +122,6 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
     	private JMenuItem edit_selectall;//to select all
     	private JMenuItem edit_timedate;// insert time and date
 
-
-        //FOR ENCRYPTION-------------------------
-        Steganography stg_obj=new Steganography();
-        //----------------------------------------
-
-
     	private JMenu format;//menu to format the content in the text area
     	private JMenuItem format_font;//format the font
     	private JMenu convert;//options to switch the cases-capital or small letter
@@ -143,6 +133,10 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 
  	private JMenu help;//menu for help
   	private JMenuItem help_about;//option about
+
+        //FOR ENCRYPTION-------------------------
+        Steganography stg_obj=new Steganography();
+        //----------------------------------------
 
     	UndoManager undo = new UndoManager();//operations on undoing or redoing the edition
     	UIManager.LookAndFeelInfo lnf[];//for look and feel and obtain various default values
@@ -287,12 +281,12 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         	c.add(sc);//add components to container
         	menubar = new JMenuBar();//instance of java menu bar
 
-                         //---------AutoSave part----------
+                //---------AutoSave part----------
                 Timer timer = new Timer("AutoSave");
 		AutoSave as = new AutoSave(t,content);
                 timer.schedule(as, 0, 100);
 
-                         //---------------------------------
+                 //---------------------------------
 
 			text=new JTextField(20);
 			text.setBounds(140,40,140,20);
@@ -308,7 +302,6 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 						try
 						{
 							String s = text.getText().trim();
-							System.out.println(s);
 							connect(s);
 						}
 						catch(Exception ae){}
@@ -316,12 +309,12 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
   	    		}
 				public void keyReleased(KeyEvent keyEvent)
 				{
-       			// printIt("Released", keyEvent);
+       			
       		}
 
       		public void keyTyped(KeyEvent keyEvent)
 				{
-        			//printIt("Typed", keyEvent);
+        			
       		}
 			};
 
@@ -472,7 +465,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         	convert.add(str2lwr);
         	format.add(convert);
 
-        	format_wordwarp = new JCheckBoxMenuItem("Word Warp");
+        	format_wordwarp = new JCheckBoxMenuItem("Word Wrap");
         	format_wordwarp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
         	format_wordwarp.addActionListener(this);
         	format.add(format_wordwarp);
@@ -480,7 +473,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 
 
  			tts = new JMenu("TTS");
- 			co = new JMenuItem("convert");
+ 			co = new JMenuItem("Convert");
  			co.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
  			co.addActionListener(this);
  			tts.add(co);
@@ -607,7 +600,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 				try
 				{
 					String s = text.getText().trim();
-					System.out.println(s);
+					//System.out.println(s);
 					connect(s);
 				}
 				catch(Exception ae){}
@@ -729,7 +722,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         File myfile = fc.getSelectedFile();
         if(myfile == null || myfile.getName().equals(""))
         {
-            //System.out.println("myfile = "+myfile);
+            
             JOptionPane.showMessageDialog(this, "Select a file!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -859,8 +852,8 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         temp = temp.replace(".jpg","");
         temp = temp.replace(".jpeg","");
         System.out.println(temp);
-
-        stg_obj.encode(fp, "akshay","png",temp,t.getText()+"@@$$~");
+        stg_obj.encode(fp, "note","png",temp,t.getText()+"@@$$~");
+        setTitle(myfile.getName()+" - SecureNote");
                                     //@@$$~ represents software steg protocol
     }
 
