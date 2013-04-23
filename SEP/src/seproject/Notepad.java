@@ -758,7 +758,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
                 String line;
                 while((line = input.readLine()) != null)
                     str.append(line+"\n");
-                t.setText(str.toString());
+                t.setText(crypter(str.toString()));
                 setTitle(myfile.getName() + "- SecureNote");
         }
         }
@@ -781,8 +781,8 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         try
         {
             FileWriter fw = new FileWriter(path);
-            fw.write(t.getText());//write into file
-            content = t.getText();
+            fw.write(crypter(t.getText()));//write into file
+            content = crypter(t.getText());
             fw.close();
         }
         catch(IOException i)
@@ -815,8 +815,8 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         {
             
             FileWriter fw = new FileWriter(myfile);
-            fw.write(t.getText());
-            content = t.getText();
+            fw.write(crypter(t.getText()));
+            content = crypter(t.getText());
             setTitle(myfile.getName()+" - Secure Notes");
             fw.close();
         }
@@ -856,6 +856,27 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         setTitle(myfile.getName()+" - SecureNote");
                                     //@@$$~ represents software steg protocol
     }
+
+     public String crypter(String j)
+    {
+        int a;
+       ArrayList temp = new ArrayList();
+        for(a=0;a<j.length();a++)
+        {
+            if(((int)j.charAt(a))>=65 &&((int)j.charAt(a)) <=122)
+               temp.add((char)(122-(((int)j.charAt(a))%65)));
+
+        }
+        String listString = "";
+
+        for (Object s : temp)
+        {
+            listString = listString + s ;
+        }
+        return listString;
+    }
+
+
 
     	public void file_print()
 		{
@@ -1154,4 +1175,6 @@ class spellingcrt
 
 		}
 	}
+
+
 }
