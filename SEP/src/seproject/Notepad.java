@@ -80,6 +80,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
 {
    	static Container c;//container to support the java components
     	public static JScrollPane sc;//scroll pane for the window
+
   	public static JTextArea t = new JTextArea() //text area for the window
  	{
             public void addNotify()
@@ -88,7 +89,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         	requestFocus();
             }
 	};
-
+        
     	private static JMenuBar menubar;//menu bar for the windiw
 
     	private JMenu file; //items in the menu bar, file menu
@@ -162,7 +163,7 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
                     ex.printStackTrace();
                 }
         	Container c = getContentPane();//container to add components
-
+                
 
         	t.setFont(new Font("Verdana",Font.PLAIN, 12));//default font
 		t.addMouseListener(new java.awt.event.MouseAdapter()
@@ -865,6 +866,10 @@ public class Notepad extends JFrame implements ActionListener, FocusListener
         {
             if(((int)j.charAt(a))>=65 &&((int)j.charAt(a)) <=122)
                temp.add((char)(122-(((int)j.charAt(a))%65)));
+            else
+            {
+                temp.add(j.charAt(a));
+            }
 
         }
         String listString = "";

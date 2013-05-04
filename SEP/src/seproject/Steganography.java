@@ -97,6 +97,7 @@ public class Steganography
 		try
 		{
 			image = ImageIO.read(file);
+
 		}
 		catch(Exception ex)
 		{
@@ -148,8 +149,7 @@ public class Steganography
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null,
-"Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
 		return image;
 	}
