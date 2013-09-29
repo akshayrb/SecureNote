@@ -1,14 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package seproject;
 
-
-/*
- *import list
- */
 import java.io.File;
 
 import java.awt.Point;
@@ -44,7 +36,7 @@ public class Steganography
 	 */
 	public boolean encode(String path, String original, String ext1, String stegan, String message)
 	{
-		String		file_name 	= image_path("D://",original,ext1);
+		String		file_name 	= image_path("C:/",original,ext1);
 		BufferedImage 	image_orig	= getImage(file_name);
 
 		//user space is not necessary for Encrypting
@@ -105,6 +97,7 @@ public class Steganography
 		try
 		{
 			image = ImageIO.read(file);
+
 		}
 		catch(Exception ex)
 		{
@@ -156,8 +149,7 @@ public class Steganography
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null,
-"Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Target File cannot hold message!", "Error",JOptionPane.ERROR_MESSAGE);
 		}
 		return image;
 	}
