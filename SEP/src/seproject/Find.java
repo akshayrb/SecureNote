@@ -1,14 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package seproject;
-
-/**
- *
- * @author Bharani
- */
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Label;
